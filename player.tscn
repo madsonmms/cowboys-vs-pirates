@@ -220,3 +220,5 @@ parameters/walk/blend_position = Vector2(-0.0010559559, -0.8744395)
 libraries = {
 &"": SubResource("AnimationLibrary_bwjto")
 }
+
+[node name="Camera2D" type="Camera2D" parent="."]
