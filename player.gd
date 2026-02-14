@@ -29,39 +29,12 @@ func _physics_process(_delta: float) -> void:
 		walking_direction = velocity.normalized()
 		animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
 		
-		if walking_direction.x != 0:
-			if direction_to_mouse.x < 0:
-				if walking_direction.x > 0 and dot_prod < -0.7:
-					print_debug("landed here")
-					player_sprite.scale.x = -1
-				elif walking_direction.x < 0 and dot_prod > 0.7:
-					print_debug("landed here")
-					player_sprite.scale.x = -1
-			if direction_to_mouse.x > 0:
-				if walking_direction.x < 0 and dot_prod < -0.7:
-					player_sprite.scale.x = 1
-				elif walking_direction.x > 0 and dot_prod > 0.7:
-					player_sprite.scale.x = 1
-		if walking_direction.y != 0:
-			if direction_to_mouse.x < 0:
-				if dot_prod < 0.7 and dot_prod > -0.7:
-					player_sprite.scale.x = -1
-				elif dot_prod < -0.7:
-					player_sprite.scale.x = 1
-			elif direction_to_mouse.x > 0:
-				if dot_prod < 0.7:
-					player_sprite.scale.x = 1
-			#elif direction_to_mouse.x < 0 and dot_prod < 0.6:
-				#player_sprite.scale.x = -1
-			#elif direction_to_mouse.x > 0 and dot_prod < -0.6:
-				#player_sprite.scale.x = 1
-			#elif direction_to_mouse.x < 0 and dot_prod < -0.6:
-				#player_sprite.scale.x = -1
-				#
-
+		print_debug(walking_direction)
+		
+		
 
 		
-		print_debug("Walking: ", walking_direction.y, "   dot: " ,dot_prod, "  mouse:", direction_to_mouse.x)
+		#print_debug("Walking: ", walking_direction, "   dot: " ,dot_prod, "  mouse:", direction_to_mouse)
 		
 		if dot_prod < -0.70:
 			
@@ -93,20 +66,34 @@ func _physics_process(_delta: float) -> void:
 			back_walking = false
 			animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
 			
+		update_sprite_orientation(walking_direction, direction_to_mouse, dot_prod)
 
-	#if idle:
-		#if mouse_position.x < 0:
-			#player_sprite.scale.x = -1
-		#else:
-			#player_sprite.scale.x = 1
-		#animation_tree.set("parameters/idle/blend_position", mouse_position)
+func update_sprite_orientation(walking_dir: Vector2, mouse_dir: Vector2, dot: float) -> void:
 	
+	if walking_dir.x != 0:
+		handle_pure_horizontal(walking_dir.x, mouse_dir.x, dot)
+		
+					
+	if walking_dir.y != 0:
+		if mouse_dir.x < 0:
+			if dot < 0.7 and dot > -0.7:
+				player_sprite.scale.x = -1
+			elif dot < -0.7:
+				player_sprite.scale.x = 1
+		elif mouse_dir.x > 0:
+			if dot < 0.7:
+				player_sprite.scale.x = 1
 
 
-#func set_sprite_facing_direction(dot_prod : float, direction_to_mouse : Vector2) -> void:
-	##print_debug("Walking: ", walking_direction.x,  "   Dot: ", dot_prod, "Dir to mouse:  ", direction_to_mouse.x)
-	#if walking_direction.y != 0:
-		#pass
-	
-
+func handle_pure_horizontal(walking_dir: float, mouse_dir: float, dot: float) -> void:
+	if walking_dir == 1:
+		if mouse_dir < 0 and dot < -0.7:
+			player_sprite.scale.x = -1
+		else:
+			player_sprite.scale.x = 1
+	if walking_dir == -1:
+		if dot > 0.7:
+			player_sprite.scale.x = -1
+		if mouse_dir > 0 and dot < -0.7:
+			player_sprite.scale.x = 1
 	
