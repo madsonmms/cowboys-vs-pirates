@@ -23,37 +23,69 @@ func _physics_process(_delta: float) -> void:
 	var camera = get_viewport().get_camera_2d()
 	var mouse_position = camera.get_local_mouse_position()
 	var direction_to_mouse = mouse_position.normalized()
+	var dot_prod = direction_to_mouse.dot(walking_direction)
 	
 	if !idle:
 		walking_direction = velocity.normalized()
 		animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
 		
-		print_debug("Walking: ", walking_direction, "  Mouse: ", sign(mouse_position))
+		if walking_direction.x != 0:
+			if direction_to_mouse.x < 0:
+				if walking_direction.x > 0 and dot_prod < -0.7:
+					print_debug("landed here")
+					player_sprite.scale.x = -1
+				elif walking_direction.x < 0 and dot_prod > 0.7:
+					print_debug("landed here")
+					player_sprite.scale.x = -1
+			if direction_to_mouse.x > 0:
+				if walking_direction.x < 0 and dot_prod < -0.7:
+					player_sprite.scale.x = 1
+				elif walking_direction.x > 0 and dot_prod > 0.7:
+					player_sprite.scale.x = 1
+		if walking_direction.y != 0:
+			if direction_to_mouse.x < 0:
+				if dot_prod < 0.7 and dot_prod > -0.7:
+					player_sprite.scale.x = -1
+				elif dot_prod < -0.7:
+					player_sprite.scale.x = 1
+			elif direction_to_mouse.x > 0:
+				if dot_prod < 0.7:
+					player_sprite.scale.x = 1
+			#elif direction_to_mouse.x < 0 and dot_prod < 0.6:
+				#player_sprite.scale.x = -1
+			#elif direction_to_mouse.x > 0 and dot_prod < -0.6:
+				#player_sprite.scale.x = 1
+			#elif direction_to_mouse.x < 0 and dot_prod < -0.6:
+				#player_sprite.scale.x = -1
+				#
+
+
 		
-		if direction_to_mouse.x < 0:
-			player_sprite.scale.x = -1
-		elif direction_to_mouse.x > 0:
-			player_sprite.scale.x = 1
+		print_debug("Walking: ", walking_direction.y, "   dot: " ,dot_prod, "  mouse:", direction_to_mouse.x)
 		
-		if direction_to_mouse.x > 0 and walking_direction.x < 0:
-			back_walking = true
-			animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
-		elif direction_to_mouse.x < 0 and walking_direction.x > 0:
-			back_walking = true
-			animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
+		if dot_prod < -0.70:
+			
+			if direction_to_mouse.x > 0 and walking_direction.x < 0:
+				back_walking = true
+				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
+			elif direction_to_mouse.x < 0 and walking_direction.x > 0:
+				back_walking = true
+				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
+				
+			if direction_to_mouse.y > 0 and walking_direction.y < 0:
+				back_walking = true
+				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
+			elif direction_to_mouse.y < 0 and walking_direction.y > 0:
+				back_walking = true
+				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
+				
+		
 		elif direction_to_mouse.x < 0 and walking_direction.x < 0 or walking_direction.x < 0 and direction_to_mouse.x > 0:
 			back_walking = false
 			animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
 		elif direction_to_mouse.x > 0 and walking_direction.x > 0 or walking_direction.x > 0 and direction_to_mouse.x < 0:
 			back_walking = false
 			animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
-			
-		if direction_to_mouse.y > 0 and walking_direction.y < 0:
-			back_walking = true
-			animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
-		elif direction_to_mouse.y < 0 and walking_direction.y > 0:
-			back_walking = true
-			animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
 		elif direction_to_mouse.y < 0 and walking_direction.y < 0 or walking_direction.y < 0 and direction_to_mouse.y > 0:
 			back_walking = false
 			animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
@@ -61,57 +93,20 @@ func _physics_process(_delta: float) -> void:
 			back_walking = false
 			animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
 			
-		
-			
-		
-		
-		#if walking_direction.x != sign(mouse_position.x):
-			#back_walking = true
-			#animation_tree.set("parameters/BackWalking/blend_position", mouse_position)
-		#elif walking_direction.x == sign(mouse_position.x):
-			#back_walking = false
-			#
-		#if walking_direction.y != sign(mouse_position.y):
-			#back_walking = true
-			#animation_tree.set("parameters/BackWalking/blend_position", -mouse_position)
-		#elif walking_direction.y == sign(mouse_position.y):
-			#back_walking = false
-		#
-		#if walking_direction.y != sign(mouse_position.y) and walking_direction.x == sign(mouse_position.x):
-			#back_walking = false
-		#elif walking_direction.x != sign(mouse_position.x) and walking_direction.y == sign(mouse_position.y):
-			#back_walking = false
-		
-		
-		
-		
-			#animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
-		#print_debug(back_walking)
-		#
-		#if x_mouse_position != walking_direction.x or y_mouse_position != walking_direction.y:
-			#
-			#
-			#animation_tree.set("parameters/BackWalking/blend_position", facing_direction)
+
+	#if idle:
+		#if mouse_position.x < 0:
+			#player_sprite.scale.x = -1
 		#else:
-			#back_walking = false
-			#animation_tree.set("parameters/Walk/blend_position", facing_direction)
-		#
-		#if x_mouse_position < 0:
-			#player_sprite.scale.x = - 1
-			#animation_tree.set("parameters/Walk/blend_position",- walking_direction)
-		#elif x_mouse_position > 0:
 			#player_sprite.scale.x = 1
-			#animation_tree.set("parameters/Walk/blend_position", walking_direction)
+		#animation_tree.set("parameters/idle/blend_position", mouse_position)
+	
 
 
-	if idle:
-		if mouse_position.x < 0:
-			player_sprite.scale.x = -1
-		else:
-			player_sprite.scale.x = 1
-		animation_tree.set("parameters/idle/blend_position", mouse_position)
-	
-	
+#func set_sprite_facing_direction(dot_prod : float, direction_to_mouse : Vector2) -> void:
+	##print_debug("Walking: ", walking_direction.x,  "   Dot: ", dot_prod, "Dir to mouse:  ", direction_to_mouse.x)
+	#if walking_direction.y != 0:
+		#pass
 	
 
 	

@@ -304,7 +304,7 @@ shape = SubResource("CircleShape2D_0xm2m")
 tree_root = SubResource("AnimationNodeStateMachine_606se")
 advance_expression_base_node = NodePath("..")
 anim_player = NodePath("../AnimationPlayer")
-parameters/BackWalking/blend_position = Vector2(0, 0)
+parameters/BackWalking/blend_position = Vector2(-0.43083423, -0.5416666)
 parameters/Walk/blend_position = Vector2(0, 0.54999995)
 parameters/idle/blend_position = Vector2(0.011615634, -0.6950673)
 
