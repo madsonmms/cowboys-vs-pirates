@@ -27,6 +27,14 @@ func _physics_process(_delta: float) -> void:
 	var direction_to_mouse = mouse_position.normalized()
 	var dot_prod = direction_to_mouse.dot(walking_direction)
 	
+	if idle:
+		back_walking = false
+		animation_tree.set("parameters/idle/blend_position", direction_to_mouse)
+		if direction_to_mouse.x < 0:
+			player_sprite.scale.x = -1
+		else:
+			player_sprite.scale.x = 1
+	
 	if !idle:
 		walking_direction = velocity.normalized()
 		animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
@@ -43,20 +51,21 @@ func _physics_process(_delta: float) -> void:
 				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
 				
 		else:
-			if direction_to_mouse.x < 0 and walking_direction.x < 0 or walking_direction.x < 0 and direction_to_mouse.x > 0:
+			
+			var aligned : bool = (
+				((direction_to_mouse.x < 0 and walking_direction.x < 0) or (walking_direction.x < 0 and direction_to_mouse.x > 0)) or
+				((direction_to_mouse.x > 0 and walking_direction.x > 0) or (walking_direction.x > 0 and direction_to_mouse.x < 0)) or
+				((direction_to_mouse.y < 0 and walking_direction.x < 0) or (walking_direction.y < 0 and direction_to_mouse.y > 0)) or 
+				((direction_to_mouse.y > 0 and walking_direction.y > 0) or (walking_direction.y > 0 and direction_to_mouse.y < 0))
+			)
+			
+			if aligned:
 				back_walking = false
 				animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
-			elif direction_to_mouse.x > 0 and walking_direction.x > 0 or walking_direction.x > 0 and direction_to_mouse.x < 0:
-				back_walking = false
-				animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
-			elif direction_to_mouse.y < 0 and walking_direction.y < 0 or walking_direction.y < 0 and direction_to_mouse.y > 0:
-				back_walking = false
-				animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
-			elif direction_to_mouse.y > 0 and walking_direction.y > 0 or walking_direction.y > 0 and direction_to_mouse.y < 0:
-				back_walking = false
-				animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
+
 			
 		update_sprite_orientation(walking_direction, direction_to_mouse, dot_prod)
+		
 
 func update_sprite_orientation(walking_dir: Vector2, mouse_dir: Vector2, dot: float) -> void:
 	
@@ -64,12 +73,8 @@ func update_sprite_orientation(walking_dir: Vector2, mouse_dir: Vector2, dot: fl
 	var has_vertical_dir: bool = walking_dir.y != 0
 	
 	if has_horizontal_dir and has_vertical_dir:
-		
 		handle_diagonal(walking_dir.x, mouse_dir, dot)
-		
-		
-		
-	
+
 	if has_horizontal_dir and !has_vertical_dir:
 		handle_pure_horizontal(walking_dir.x, mouse_dir.x, dot)
 		
@@ -103,6 +108,7 @@ func handle_pure_vertical(mouse_dir : float, dot: float) -> void:
 			player_sprite.scale.x = 1
 
 func handle_diagonal(walking_dir: float, mouse_dir: Vector2, dot: float) -> void:
+	
 	var is_backwalking: bool = dot < 0.0
 	
 	if walking_dir > 0:
