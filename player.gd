@@ -7,6 +7,8 @@ extends CharacterBody2D
 @onready var input_dir : Vector2 = Vector2.ZERO
 @export var move_speed : float = 100.00
 
+const BACKWALK_THRESHOLD : float = - 0.7
+
 var walking_direction : Vector2 = Vector2(0, -1)
 var facing_direction : Vector2 = Vector2.DOWN
 var back_walking : bool = false
@@ -29,29 +31,17 @@ func _physics_process(_delta: float) -> void:
 		walking_direction = velocity.normalized()
 		animation_tree.set("parameters/Walk/blend_position", direction_to_mouse)
 		
-		print_debug(walking_direction)
+		var is_backwalking = dot_prod < BACKWALK_THRESHOLD
 		
-		
-
-		
-		#print_debug("Walking: ", walking_direction, "   dot: " ,dot_prod, "  mouse:", direction_to_mouse)
-		
-		if dot_prod < -0.70:
+		if is_backwalking:
 			
-			if direction_to_mouse.x > 0 and walking_direction.x < 0:
+			var mouse_opposite_horizontal: bool = (direction_to_mouse.x > 0 and walking_direction.x < 0) or (direction_to_mouse.x < 0 and walking_direction.x > 0)
+			var mouse_opposite_vertical: bool = (direction_to_mouse.y > 0 and walking_direction.y < 0) or (direction_to_mouse.y < 0 and walking_direction.y > 0)
+			
+			if mouse_opposite_horizontal or mouse_opposite_vertical:
 				back_walking = true
 				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
-			elif direction_to_mouse.x < 0 and walking_direction.x > 0:
-				back_walking = true
-				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
-				
-			if direction_to_mouse.y > 0 and walking_direction.y < 0:
-				back_walking = true
-				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
-			elif direction_to_mouse.y < 0 and walking_direction.y > 0:
-				back_walking = true
-				animation_tree.set("parameters/BackWalking/blend_position", direction_to_mouse)
-				
+
 		
 		elif direction_to_mouse.x < 0 and walking_direction.x < 0 or walking_direction.x < 0 and direction_to_mouse.x > 0:
 			back_walking = false
@@ -75,7 +65,6 @@ func update_sprite_orientation(walking_dir: Vector2, mouse_dir: Vector2, dot: fl
 		
 	if walking_dir.y != 0:
 		handle_pure_vertical(mouse_dir.x, dot)
-		
 
 
 func handle_pure_horizontal(walking_dir: float, mouse_dir: float, dot: float) -> void:
