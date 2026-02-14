@@ -73,19 +73,13 @@ func update_sprite_orientation(walking_dir: Vector2, mouse_dir: Vector2, dot: fl
 	if walking_dir.x != 0:
 		handle_pure_horizontal(walking_dir.x, mouse_dir.x, dot)
 		
-					
 	if walking_dir.y != 0:
-		if mouse_dir.x < 0:
-			if dot < 0.7 and dot > -0.7:
-				player_sprite.scale.x = -1
-			elif dot < -0.7:
-				player_sprite.scale.x = 1
-		elif mouse_dir.x > 0:
-			if dot < 0.7:
-				player_sprite.scale.x = 1
+		handle_pure_vertical(mouse_dir.x, dot)
+		
 
 
 func handle_pure_horizontal(walking_dir: float, mouse_dir: float, dot: float) -> void:
+	
 	if walking_dir == 1:
 		if mouse_dir < 0 and dot < -0.7:
 			player_sprite.scale.x = -1
@@ -96,4 +90,13 @@ func handle_pure_horizontal(walking_dir: float, mouse_dir: float, dot: float) ->
 			player_sprite.scale.x = -1
 		if mouse_dir > 0 and dot < -0.7:
 			player_sprite.scale.x = 1
-	
+
+func handle_pure_vertical(mouse_dir: float, dot: float) -> void:
+	if mouse_dir < 0:
+		if dot < 0.7 and dot > -0.7:
+			player_sprite.scale.x = -1
+		elif dot < -0.7:
+			player_sprite.scale.x = 1
+	elif mouse_dir > 0:
+		if dot < 0.7:
+			player_sprite.scale.x = 1
