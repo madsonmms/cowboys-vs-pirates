@@ -1,7 +1,6 @@
-[gd_scene load_steps=38 format=3 uid="uid://cwts83ji0kjaf"]
+[gd_scene load_steps=37 format=3 uid="uid://cwts83ji0kjaf"]
 
 [ext_resource type="Script" uid="uid://cabesou6m17he" path="res://player.gd" id="1_onrkg"]
-[ext_resource type="PackedScene" uid="uid://bt735e2yeflqv" path="res://gun.tscn" id="2_i3pqv"]
 [ext_resource type="Texture2D" uid="uid://c4dq18peygvm6" path="res://pirate_faceless_anim_sprite-sheet_v02.png" id="2_onrkg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0xm2m"]
@@ -290,11 +289,8 @@ _data = {
 &"walking_up": SubResource("Animation_ivps1")
 }
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_onrkg")
-
-[node name="Gun" parent="." instance=ExtResource("2_i3pqv")]
-show_behind_parent = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_onrkg")

@@ -7,6 +7,8 @@ extends CharacterBody2D
 @onready var input_dir : Vector2 = Vector2.ZERO
 @export var move_speed : float = 100.00
 
+@onready var gun : Node2D = null
+
 const BACKWALK_THRESHOLD : float = - 0.7
 
 var walking_direction : Vector2 = Vector2(0, -1)
@@ -130,3 +132,8 @@ func handle_diagonal(walking_dir: float, mouse_dir: Vector2, dot: float) -> void
 				player_sprite.scale.x = 1
 		else:
 			player_sprite.scale.x = -1
+
+func equip_gun(gun_scene: PackedScene) -> void:
+	gun = gun_scene.instantiate()
+	add_child(gun)
+	gun.equiped = true
