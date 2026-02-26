@@ -42,7 +42,7 @@ func _physics_process(_delta: float) -> void:
 		var is_backwalking = dot_prod < BACKWALK_THRESHOLD
 		
 		if is_backwalking:
-			
+				
 			var mouse_opposite_horizontal: bool = (direction_to_mouse.x > 0 and walking_direction.x < 0) or (direction_to_mouse.x < 0 and walking_direction.x > 0)
 			var mouse_opposite_vertical: bool = (direction_to_mouse.y > 0 and walking_direction.y < 0) or (direction_to_mouse.y < 0 and walking_direction.y > 0)
 			
@@ -66,6 +66,8 @@ func _physics_process(_delta: float) -> void:
 			
 		update_sprite_orientation(walking_direction, direction_to_mouse, dot_prod)
 		
+
+
 
 func update_sprite_orientation(walking_dir: Vector2, mouse_dir: Vector2, dot: float) -> void:
 	

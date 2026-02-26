@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://o5q773lokpba"]
+
+[ext_resource type="Script" uid="uid://dyumyu2ttsqsb" path="res://bullet.gd" id="1_v7oki"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_v8qja"]
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource("1_v7oki")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("PlaceholderTexture2D_v8qja")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
