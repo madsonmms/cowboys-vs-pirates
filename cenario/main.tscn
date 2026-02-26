@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwh26pspleao3"]
+
+[ext_resource type="PackedScene" uid="uid://cwts83ji0kjaf" path="res://player/pirate/pirate.tscn" id="1_phq86"]
+[ext_resource type="PackedScene" uid="uid://c0dvewcb5ssso" path="res://weapons/utilities/gun.tscn" id="2_c2tjl"]
+[ext_resource type="PackedScene" uid="uid://bt735e2yeflqv" path="res://weapons/pistol/pistol.tscn" id="3_e3gci"]
+[ext_resource type="Texture2D" uid="uid://d4gavelh5wlme" path="res://weapons/sprites/guns.png" id="4_85qch"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1bvp3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_phq86"]
+
+[node name="Main" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_phq86")]
+
+[node name="Pìstol" parent="." instance=ExtResource("2_c2tjl")]
+position = Vector2(61, 39)
+packed_scene = ExtResource("3_e3gci")
+
+[node name="Sprite2D" type="Sprite2D" parent="Pìstol"]
+position = Vector2(2, 3)
+texture = ExtResource("4_85qch")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pìstol"]
+shape = SubResource("CircleShape2D_1bvp3")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(77, 63)
+shape = SubResource("RectangleShape2D_phq86")
+debug_color = Color(0.8989468, 0.00018039405, 0.7689732, 0.41960785)

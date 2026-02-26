@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c4dq18peygvm6"
-path="res://.godot/imported/pirate_faceless_anim_sprite-sheet_v02.png-c580a4fd43e105c461ae3fe1be69ab5f.ctex"
+path="res://.godot/imported/pirate_faceless_anim_sprite-sheet_v02.png-dbfc963db136fb507f25b0f086a4afc4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://pirate_faceless_anim_sprite-sheet_v02.png"
-dest_files=["res://.godot/imported/pirate_faceless_anim_sprite-sheet_v02.png-c580a4fd43e105c461ae3fe1be69ab5f.ctex"]
+source_file="res://player/pirate/sprites/pirate_faceless_anim_sprite-sheet_v02.png"
+dest_files=["res://.godot/imported/pirate_faceless_anim_sprite-sheet_v02.png-dbfc963db136fb507f25b0f086a4afc4.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://h4w8bvstp8xd"
-path="res://.godot/imported/unarmed.png-f3ab4807fef52feb9efcc229156c9a7a.ctex"
+path="res://.godot/imported/unarmed.png-e2b84e91f8621bbfa2238b173dc04a97.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://unarmed.png"
-dest_files=["res://.godot/imported/unarmed.png-f3ab4807fef52feb9efcc229156c9a7a.ctex"]
+source_file="res://player/pirate/sprites/unarmed.png"
+dest_files=["res://.godot/imported/unarmed.png-e2b84e91f8621bbfa2238b173dc04a97.ctex"]
 
 [params]
 

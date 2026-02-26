@@ -1,7 +1,7 @@
-[gd_scene load_steps=37 format=3 uid="uid://cwts83ji0kjaf"]
+[gd_scene load_steps=48 format=3 uid="uid://cwts83ji0kjaf"]
 
-[ext_resource type="Script" uid="uid://cabesou6m17he" path="res://player.gd" id="1_onrkg"]
-[ext_resource type="Texture2D" uid="uid://c4dq18peygvm6" path="res://pirate_faceless_anim_sprite-sheet_v02.png" id="2_onrkg"]
+[ext_resource type="Script" uid="uid://cabesou6m17he" path="res://player/player.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://c4dq18peygvm6" path="res://player/pirate/sprites/pirate_faceless_anim_sprite-sheet_v02.png" id="2_onrkg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0xm2m"]
 radius = 9.0
@@ -75,6 +75,28 @@ blend_point_3/node = SubResource("AnimationNodeAnimation_sweqy")
 blend_point_3/pos = Vector2(-1, 0)
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tn77k"]
+animation = &"idle_side"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_i3s2j"]
+animation = &"idle_side"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pj81i"]
+animation = &"idle_side"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_arjei"]
+animation = &"idle_side"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_05r6a"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_tn77k")
+blend_point_0/pos = Vector2(0, -1)
+blend_point_1/node = SubResource("AnimationNodeAnimation_i3s2j")
+blend_point_1/pos = Vector2(1, 0)
+blend_point_2/node = SubResource("AnimationNodeAnimation_pj81i")
+blend_point_2/pos = Vector2(-1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_arjei")
+blend_point_3/pos = Vector2(0, 1)
+
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ivps1"]
 advance_mode = 2
 
@@ -92,11 +114,35 @@ advance_expression = "velocity"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hqtel"]
 advance_mode = 2
-advance_expression = "!velocity"
+advance_expression = "!velocity or knockback"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sweqy"]
 advance_mode = 2
 advance_expression = "!back_walking"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_msihe"]
+advance_mode = 2
+advance_expression = "knockback"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u07hn"]
+advance_mode = 2
+advance_expression = "!knockback"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_iue7h"]
+advance_mode = 2
+advance_expression = "velocity and !knockback"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gepoh"]
+advance_mode = 2
+advance_expression = "knockback"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_tn77k"]
+advance_mode = 2
+advance_expression = "knockback"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_arjei"]
+advance_mode = 2
+advance_expression = "!knockback and backwalking"
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_606se"]
 states/BackWalking/node = SubResource("AnimationNodeBlendSpace2D_n7ghd")
@@ -104,8 +150,10 @@ states/BackWalking/position = Vector2(579, 192)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_606se")
 states/Walk/position = Vector2(603, 50)
 states/idle/node = SubResource("AnimationNodeBlendSpace2D_2hs0m")
-states/idle/position = Vector2(352, 100)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_ivps1"), "BackWalking", "idle", SubResource("AnimationNodeStateMachineTransition_q13i1"), "Walk", "BackWalking", SubResource("AnimationNodeStateMachineTransition_onrkg"), "idle", "Walk", SubResource("AnimationNodeStateMachineTransition_i3pqv"), "Walk", "idle", SubResource("AnimationNodeStateMachineTransition_hqtel"), "BackWalking", "Walk", SubResource("AnimationNodeStateMachineTransition_sweqy")]
+states/idle/position = Vector2(360, 50)
+states/knockback/node = SubResource("AnimationNodeBlendSpace2D_05r6a")
+states/knockback/position = Vector2(360, 186)
+transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_ivps1"), "BackWalking", "idle", SubResource("AnimationNodeStateMachineTransition_q13i1"), "Walk", "BackWalking", SubResource("AnimationNodeStateMachineTransition_onrkg"), "idle", "Walk", SubResource("AnimationNodeStateMachineTransition_i3pqv"), "Walk", "idle", SubResource("AnimationNodeStateMachineTransition_hqtel"), "BackWalking", "Walk", SubResource("AnimationNodeStateMachineTransition_sweqy"), "idle", "knockback", SubResource("AnimationNodeStateMachineTransition_msihe"), "knockback", "idle", SubResource("AnimationNodeStateMachineTransition_u07hn"), "knockback", "Walk", SubResource("AnimationNodeStateMachineTransition_iue7h"), "Walk", "knockback", SubResource("AnimationNodeStateMachineTransition_gepoh"), "BackWalking", "knockback", SubResource("AnimationNodeStateMachineTransition_tn77k"), "knockback", "BackWalking", SubResource("AnimationNodeStateMachineTransition_arjei")]
 
 [sub_resource type="Animation" id="Animation_dw050"]
 length = 0.001
@@ -307,6 +355,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/BackWalking/blend_position = Vector2(-0.43083423, -0.5416666)
 parameters/Walk/blend_position = Vector2(0, 0.54999995)
 parameters/idle/blend_position = Vector2(0.011615634, -0.6950673)
+parameters/knockback/blend_position = Vector2(-0.002270162, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
