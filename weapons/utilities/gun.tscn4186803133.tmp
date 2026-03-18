@@ -5,4 +5,5 @@
 
 [node name="Gun" type="Area2D"]
 script = ExtResource("1_dk5gl")
+weapon_type = 0
 weapon_data = ExtResource("2_iejkf")

@@ -44,8 +44,6 @@ func _physics_process(_delta: float) -> void:
 	move_and_slide()
 	#controla o movimento
 	
-	print_debug(knockback)
-	
 	var idle = !velocity
 	var camera = get_viewport().get_camera_2d()
 	var mouse_position = camera.get_local_mouse_position()
@@ -172,7 +170,6 @@ func equip_gun(gun_scene: PackedScene) -> void:
 	gun.shot_fired.connect(_on_gun_shot_fired)
 	
 func _on_gun_shot_fired(knockback_dir: Vector2, knockback_force: float, knockback_timer: float) -> void:
-	print_debug(knockback_dir, knockback_force, knockback_timer)
 	knockback_velocity = knockback_dir * knockback_force
 	knockback_duration = knockback_timer
 	

@@ -3,7 +3,7 @@ extends Node2D
 signal shot_fired(knockback_direction: Vector2, knockback_force: float, knockback_timer : float)
 
 var bullet = preload("res://weapons/pistol/pistol_bullet.tscn")
-var sprite = preload("res://weapons/sprites/guns.png")
+#var sprite = preload("res://weapons/sprites/guns.png")
 
 @onready var equiped : bool = false : set = _set_equiped, get = _get_equiped
 @onready var hand_sprite : Sprite2D = $HandSprite

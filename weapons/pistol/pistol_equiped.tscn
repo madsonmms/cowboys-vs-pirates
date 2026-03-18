@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddlwelnkwrpum"]
+
+[ext_resource type="Texture2D" uid="uid://d4gavelh5wlme" path="res://weapons/sprites/guns.png" id="1_keehc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_daotu"]
+atlas = ExtResource("1_keehc")
+region = Rect2(0, 0, 32, 32)
+
+[node name="PistolEquiped" type="TextureRect"]
+offset_left = -7.0
+offset_top = -16.0
+offset_right = 25.0
+offset_bottom = 16.0
+texture = SubResource("AtlasTexture_daotu")

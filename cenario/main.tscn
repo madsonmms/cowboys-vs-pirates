@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cwts83ji0kjaf" path="res://player/pirate/pirate.tscn" id="1_phq86"]
 [ext_resource type="PackedScene" uid="uid://c0dvewcb5ssso" path="res://weapons/utilities/gun.tscn" id="2_c2tjl"]
 [ext_resource type="PackedScene" uid="uid://bt735e2yeflqv" path="res://weapons/pistol/pistol.tscn" id="3_e3gci"]
-[ext_resource type="Texture2D" uid="uid://d4gavelh5wlme" path="res://weapons/sprites/guns.png" id="4_85qch"]
+[ext_resource type="Texture2D" uid="uid://d2sbi8diq8mek" path="res://icon.svg" id="5_c2tjl"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1bvp3"]
 
@@ -18,15 +18,16 @@ position = Vector2(61, 39)
 packed_scene = ExtResource("3_e3gci")
 
 [node name="Sprite2D" type="Sprite2D" parent="Pìstol"]
-position = Vector2(2, 3)
-texture = ExtResource("4_85qch")
-hframes = 4
-vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pìstol"]
 shape = SubResource("CircleShape2D_1bvp3")
 
 [node name="Area2D" type="Area2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+position = Vector2(77, 63)
+scale = Vector2(0.15625, 0.15625)
+texture = ExtResource("5_c2tjl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(77, 63)
